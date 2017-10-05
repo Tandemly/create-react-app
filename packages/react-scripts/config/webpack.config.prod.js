@@ -252,6 +252,7 @@ module.exports = {
                         ident: "postcss",
                         plugins: () => [
                           require("postcss-flexbugs-fixes"),
+                          (sourceMap: shouldUseSourceMap),
                           autoprefixer({
                             browsers: [
                               ">1%",
@@ -352,7 +353,7 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,
+            test: /\.s[ac]ss$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -372,6 +373,7 @@ module.exports = {
                         // Necessary for external CSS imports to work
                         // https://github.com/facebookincubator/create-react-app/issues/2677
                         ident: "postcss",
+                        sourceMap: shouldUseSourceMap,
                         plugins: () => [
                           require("postcss-flexbugs-fixes"),
                           autoprefixer({
@@ -385,6 +387,11 @@ module.exports = {
                           })
                         ]
                       }
+                    },
+                    require.resolve("resolve-url-loader"),
+                    {
+                      loader: "sass-loader",
+                      options: { sourceMap: shouldUseSourceMap }
                     }
                   ]
                 },
