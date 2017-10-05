@@ -75,6 +75,7 @@ module.exports = {
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
+  watch: true,
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
@@ -239,6 +240,7 @@ module.exports = {
                   // Necessary for external CSS imports to work
                   // https://github.com/facebookincubator/create-react-app/issues/2677
                   ident: 'postcss',
+                  sourceMap: true,
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
                     autoprefixer({
@@ -253,6 +255,7 @@ module.exports = {
                   ],
                 },
               },
+              require.resolve('resolve-url-loader'),
               require.resolve('sass-loader') 
             ],
           },
@@ -315,6 +318,7 @@ module.exports = {
                   // Necessary for external CSS imports to work
                   // https://github.com/facebookincubator/create-react-app/issues/2677
                   ident: 'postcss',
+                  sourceMap: true,
                   plugins: () => [
                     require('postcss-flexbugs-fixes'),
                     autoprefixer({
@@ -329,6 +333,7 @@ module.exports = {
                   ],
                 },
               },
+              require.resolve('resolve-url-loader'),
               require.resolve('sass-loader') 
             ],
           },
