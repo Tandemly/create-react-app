@@ -254,7 +254,6 @@ module.exports = {
                         ident: 'postcss',
                         plugins: () => [
                           require('postcss-flexbugs-fixes'),
-                          sourceMap: shouldUseSourceMap,
                           autoprefixer({
                             browsers: [
                               '>1%',
