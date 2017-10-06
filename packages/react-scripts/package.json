@@ -1,7 +1,8 @@
 {
   "name": "@tandem.ly/react-scripts",
   "version": "1.0.16",
-  "description": "Tandem.ly Custom Configuration and scripts for Create React App.",
+  "description":
+    "Tandem.ly Custom Configuration and scripts for Create React App.",
   "repository": "Tandemly/create-react-app",
   "license": "MIT",
   "engines": {
@@ -10,13 +11,7 @@
   "bugs": {
     "url": "https://github.com/Tandemly/create-react-app/issues"
   },
-  "files": [
-    "bin",
-    "config",
-    "scripts",
-    "template",
-    "utils"
-  ],
+  "files": ["bin", "config", "scripts", "template", "utils"],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
@@ -52,9 +47,9 @@
     "promise": "8.0.1",
     "react-dev-utils": "^4.1.0",
     "sass-loader": "^6.0.6",
-    "style-loader": "0.18.2",
+    "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
-    "url-loader": "0.5.9",
+    "url-loader": "0.6.2",
     "webpack": "3.5.1",
     "webpack-dev-server": "2.8.2",
     "webpack-manifest-plugin": "1.2.1",
