@@ -186,6 +186,7 @@ module.exports = {
           {
             test: /\.module\.css$/,
             use: [
+              require.resolve("style-loader"),
               {
                 loader: require.resolve("css-loader"),
                 options: {
@@ -214,8 +215,7 @@ module.exports = {
                     })
                   ]
                 }
-              },
-              require.resolve("style-loader")
+              }
             ]
           },
           // SCSS/SASS Modules version of the above loader. Files should be suffixed as .module.s[ac]ss
@@ -224,6 +224,7 @@ module.exports = {
           {
             test: /\.module\.s[ca]ss$/,
             use: [
+              require.resolve("style-loader"),
               {
                 loader: require.resolve("css-loader"),
                 options: {
@@ -255,8 +256,7 @@ module.exports = {
                 }
               },
               require.resolve("resolve-url-loader"),
-              require.resolve("sass-loader"),
-              require.resolve("style-loader")
+              require.resolve("sass-loader")
             ]
           },
           // "postcss" loader applies autoprefixer to our CSS.
