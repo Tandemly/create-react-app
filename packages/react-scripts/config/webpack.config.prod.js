@@ -94,7 +94,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: [".web.js", ".js", ".json", ".web.jsx", ".jsx"],
+    extensions: [".web.js", ".mjs", ".js", ".json", ".web.jsx", ".jsx"],
     alias: {
       // @remove-on-eject-begin
       // Resolve Babel runtime relative to react-scripts.
@@ -128,7 +128,7 @@ module.exports = {
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|mjs)$/,
         enforce: "pre",
         use: [
           {
@@ -167,7 +167,7 @@ module.exports = {
           },
           // Process JS with Babel.
           {
-            test: /\.(js|jsx)$/,
+            test: /\.(js|jsx|mjs)$/,
             include: paths.appSrc,
             loader: require.resolve("babel-loader"),
             options: {
@@ -252,6 +252,7 @@ module.exports = {
                         ident: "postcss",
                         plugins: () => [
                           require("postcss-flexbugs-fixes"),
+                          (sourceMap: shouldUseSourceMap),
                           autoprefixer({
                             browsers: [
                               ">1%",
@@ -277,6 +278,7 @@ module.exports = {
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // The notation here is somewhat confusing.
+          // "sass-loader" converts sass/scss files to CSS output
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
           // "style" loader normally turns CSS into JS modules injecting <style>,
@@ -289,7 +291,7 @@ module.exports = {
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
           {
-            test: /\.css$/,
+            test: /\.s[ac]ss$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
                 {
@@ -298,9 +300,11 @@ module.exports = {
                     {
                       loader: require.resolve("css-loader"),
                       options: {
+                        modules: true,
                         importLoaders: 1,
                         minimize: true,
-                        sourceMap: shouldUseSourceMap
+                        sourceMap: shouldUseSourceMap,
+                        localIdentName: "[name]__[local]__[hash:base64:5]"
                       }
                     },
                     {
@@ -309,6 +313,7 @@ module.exports = {
                         // Necessary for external CSS imports to work
                         // https://github.com/facebookincubator/create-react-app/issues/2677
                         ident: "postcss",
+                        sourceMap: shouldUseSourceMap,
                         plugins: () => [
                           require("postcss-flexbugs-fixes"),
                           autoprefixer({
@@ -322,6 +327,11 @@ module.exports = {
                           })
                         ]
                       }
+                    },
+                    require.resolve("resolve-url-loader"),
+                    {
+                      loader: "sass-loader",
+                      options: { sourceMap: shouldUseSourceMap }
                     }
                   ]
                 },
@@ -331,7 +341,6 @@ module.exports = {
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           // The notation here is somewhat confusing.
-          // "sass-loader" converts sass/scss files to CSS output
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
           // "style" loader normally turns CSS into JS modules injecting <style>,
@@ -401,7 +410,7 @@ module.exports = {
             // it's runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.js$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
             options: {
               name: "static/media/[name].[hash:8].[ext]"
             }
@@ -450,6 +459,9 @@ module.exports = {
         // Pending further investigation:
         // https://github.com/mishoo/UglifyJS2/issues/2011
         comparisons: false
+      },
+      mangle: {
+        safari10: true
       },
       output: {
         comments: false,
